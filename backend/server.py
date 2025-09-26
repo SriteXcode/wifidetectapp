@@ -63,4 +63,4 @@ def get_networks():
     return {"networks": ssids, "duplicates": duplicates}
 @app.get("/")
 def root():
-    return {"message": "Backend is live. Use /scan to get networks."}
+    return {"message": "Backend is live. Use /networks to get networks."}
