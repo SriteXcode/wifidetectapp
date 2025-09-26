@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wi-Fi Scanner PWA</title>
+<link rel="manifest" href="manifest.json">
+<style>
+body { font-family: sans-serif; padding: 20px; background:#f1f1f1; }
+h1 { color: #d00; }
+ul { list-style: none; padding: 0; }
+li { background: #fff; margin: 5px 0; padding: 10px; border-radius:5px; }
+</style>
+</head>
+<body>
+<h1>Available Wi-Fi Networks</h1>
+<ul id="networks"></ul>
+
+<h2>Duplicate SSIDs</h2>
+<ul id="duplicates"></ul>
+
+<script>
+async function fetchNetworks() {
+    try {
+        const res = await fetch("http://127.0.0.1:8000/networks");
+        const data = await res.json();
+        
+        const networksEl = document.getElementById("networks");
+        networksEl.innerHTML = "";
+        data.networks.forEach((ssid, i) => {
+            networksEl.innerHTML += `<li>${i+1}. ${ssid}</li>`;
+        });
+
+        const duplicatesEl = document.getElementById("duplicates");
+        duplicatesEl.innerHTML = "";
+        data.duplicates.forEach(dup => {
+            duplicatesEl.innerHTML += `<li>${dup.SSID} → ${dup.Count} times</li>`;
+        });
+
+    } catch(e) {
+        console.error(e);
+    }
+}
+
+fetchNetworks();
+</script>
+</body>
+</html>
