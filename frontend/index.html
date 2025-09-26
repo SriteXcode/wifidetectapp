@@ -22,7 +22,7 @@ li { background: #fff; margin: 5px 0; padding: 10px; border-radius:5px; }
 <script>
 async function fetchNetworks() {
     try {
-        const res = await fetch("https://wifidetectapp.onrender.com//networks");
+        const res = await fetch("https://wifidetectapp.onrender.com/networks");
         const data = await res.json();
         
         const networksEl = document.getElementById("networks");
