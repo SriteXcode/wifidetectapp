@@ -73,7 +73,6 @@ def root():
 # Welcome and footer texts
 WELCOME_TEXT = "Welcome to Wi-Fi Detector!"
 FOOTER_TEXT = "© 2025 Nidhiii & Pritanshiii. All rights reserved."
-API_URL = os.getenv("API_URL", "http://localhost:8000")
 
 @app.get("/texts")
 def get_texts():

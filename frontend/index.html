@@ -58,19 +58,6 @@ async function loadTexts() {
     }
 }
 
-async function loadContent() {
-    try {
-        const res = await fetch(`${API_URL}/`);
-        const data = await res.json();
-
-        document.getElementById("welcome").innerText = data.welcome;
-        document.getElementById("footer").innerText = data.footer;
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-loadContent();
 fetchNetworks();
 loadTexts();
 </script>
