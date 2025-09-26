@@ -10,19 +10,23 @@ body { font-family: sans-serif; padding: 20px; background:#f1f1f1; }
 h1 { color: #d00; }
 ul { list-style: none; padding: 0; }
 li { background: #fff; margin: 5px 0; padding: 10px; border-radius:5px; }
+header { font-size: 2em; margin-bottom: 20px; }
+footer { margin-top: 40px; font-size: 0.9em; color: gray; }
 </style>
 </head>
 <body>
+<header id="welcome">Loading...</header>
 <h1>Available Wi-Fi Networks</h1>
 <ul id="networks"></ul>
 
 <h2>Duplicate SSIDs</h2>
 <ul id="duplicates"></ul>
-
+<footer id="footer">Loading...</footer>
+<script src="config.js"></script>
 <script>
 async function fetchNetworks() {
     try {
-        const res = await fetch("https://wifidetectapp.onrender.com/networks");
+        const res = await fetch(`${CONFIG.BACKEND_URL}/networks`);
         const data = await res.json();
         
         const networksEl = document.getElementById("networks");
@@ -42,7 +46,33 @@ async function fetchNetworks() {
     }
 }
 
+
+async function loadTexts() {
+    try {
+        const res = await fetch(`${CONFIG.BACKEND_URL}/texts`); // or your deployed backend URL
+        const data = await res.json();
+        document.getElementById("welcome").textContent = data.welcome;
+        document.getElementById("footer").textContent = data.footer;
+    } catch (err) {
+        console.error("Error fetching texts:", err);
+    }
+}
+
+async function loadContent() {
+    try {
+        const res = await fetch(`${API_URL}/`);
+        const data = await res.json();
+
+        document.getElementById("welcome").innerText = data.welcome;
+        document.getElementById("footer").innerText = data.footer;
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+loadContent();
 fetchNetworks();
+loadTexts();
 </script>
 </body>
 </html>

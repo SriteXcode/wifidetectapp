@@ -1,14 +1,19 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
 import subprocess
 import platform
+import os
+
+load_dotenv()
 
 app = FastAPI()
 
 # Allow CORS for frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[os.getenv("FRONTEND_URL"), "*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -64,3 +69,15 @@ def get_networks():
 @app.get("/")
 def root():
     return {"message": "Backend is live. Use /networks to get networks."}
+
+# Welcome and footer texts
+WELCOME_TEXT = "Welcome to Wi-Fi Detector!"
+FOOTER_TEXT = "© 2025 Nidhiii & Pritanshiii. All rights reserved."
+API_URL = os.getenv("API_URL", "http://localhost:8000")
+
+@app.get("/texts")
+def get_texts():
+    return {"welcome": WELCOME_TEXT, "footer": FOOTER_TEXT}
+
+  
+  
